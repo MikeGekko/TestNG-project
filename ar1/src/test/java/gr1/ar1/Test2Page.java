@@ -18,11 +18,13 @@ public class Test2Page {
 	WebDriver driver;
 	String url = "https://www.redmine.org/account/register";
 	redmineorgPage rp;
+	String testResult;
 	public static String[] datalog = new String[6];
 	
 	public Test2Page (WebDriver driver){
 		this.driver=driver;
 		driver.get(url);
+		this.rp = new redmineorgPage(driver);
 		PageFactory.initElements(driver, this);
 	}
 	
@@ -42,54 +44,51 @@ public class Test2Page {
 	}
 	
 
-	public void resultTest2Write(String testRes) throws FilloException {
+	public void resultTest2Write() throws FilloException {
 		Fillo fillo = new Fillo();
 		Connection connection = fillo.getConnection("..\\ar1\\src\\login_data.xlsx");
 		String strQuery;
-		strQuery= testRes;
+		strQuery= testResult;
 		connection.executeUpdate(strQuery);
 		connection.close();
 	}
 	
-	public void resultWrite() throws FilloException {
-		Fillo fillo = new Fillo();
-		Connection connection = fillo.getConnection("..\\ar1\\src\\login_data.xlsx");
-		connection.close();
+	public void checkResult(String test) {
+		if(rp.falsereg.getText().contains(test)) {
+			testResult = "INSERT INTO res2(RESULTS) VALUES('test false')";
+		}
+		else {
+			testResult = "INSERT INTO res2(RESULTS) VALUES('test true')";
+		}
 	}
 	
 	public void register1() throws FilloException {
-		rp = new redmineorgPage(driver);
 		this.log_data();
 		rp.loginInput.sendKeys(datalog[0]);
 		rp.submitButt.click();
 	}
 	public void register2() throws FilloException {
-		rp = new redmineorgPage(driver);
 		this.log_data();
 		rp.passInput.sendKeys(datalog[1]);
 		rp.pass2Input.sendKeys(datalog[1]);
 		rp.submitButt.click();
 	}
 	public void register4() throws FilloException {
-		rp = new redmineorgPage(driver);
 		this.log_data();	
 		rp.nameInput.sendKeys(datalog[2]);
 		rp.submitButt.click();
 	}
 	public void register5() throws FilloException {
-		rp = new redmineorgPage(driver);
 		this.log_data();
 		rp.lastnameInput.sendKeys(datalog[3]);
 		rp.submitButt.click();
 	}
 	public void register6() throws FilloException {
-		rp = new redmineorgPage(driver);
 		this.log_data();
 		rp.emailInput.sendKeys(datalog[4]);
 		rp.submitButt.click();
 	}
 	public void register7() throws FilloException {
-		rp = new redmineorgPage(driver);
 		this.log_data();
 		rp.nickInput.sendKeys(datalog[5]);
 		rp.submitButt.click();

@@ -3,6 +3,8 @@ package gr1.ar1;
 
 
 
+import static org.testng.Assert.assertTrue;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterTest;
@@ -45,6 +47,7 @@ public class Test3 {
 	
 		@Test (dataProvider="RegisterData")
 		public void testRegister(String login, String password, String FN, String LN, String mail, String nick) throws FilloException {
+			driver.get("https://www.redmine.org/account/register");
 			test3.register(login, password, FN, LN, mail, nick);
 			if (driver.getCurrentUrl().equals("https://www.redmine.org/login"))
 			{
@@ -55,7 +58,9 @@ public class Test3 {
 				testResult = "INSERT INTO res3(RESULTS) VALUES('test NOT passed')";
 			}
 			test3.resultTest3Write(testResult);
-			driver.get("https://www.redmine.org/account/register");
+			assertTrue(driver.getCurrentUrl().equals("https://www.redmine.org/login"));
+
+			
 		}
 		
 }
